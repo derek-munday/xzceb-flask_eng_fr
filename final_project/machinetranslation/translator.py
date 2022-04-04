@@ -17,25 +17,22 @@ language_translator = LanguageTranslatorV3(
 
 language_translator.set_service_url(url)
 
-translation = language_translator.translate(
-    text='Hello, how are you today?',
-    model_id='en-es').get_result()
-print(json.dumps(translation, indent=2, ensure_ascii=False))
-
 def englishToFrench(englishText):
     try:
-        frenchText = language_translator.translate(
+        translation = language_translator.translate(
             text=englishText,
             model_id='en-fr').get_result()
+        frenchText = json.dumps(translation["translations"][0]["translation"]).strip('\"')
     except ValueError:
         frenchText = ''
     return frenchText
 
 def frenchToEnglish(frenchText):
     try:
-        englishText = language_translator.translate(
+        translation = language_translator.translate(
             text=frenchText,
             model_id='fr-en').get_result()
+        englishText = json.dumps(translation["translations"][0]["translation"]).strip('\"')
     except ValueError:
         englishText = ''
     return englishText
